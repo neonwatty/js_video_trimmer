@@ -1,6 +1,27 @@
+import { clearSliders, loadSliders, saveSlider } from "./local.js";
+import { onDurationReady } from "./video.js";
+
+function waitForVideoDuration() {
+  return new Promise((resolve) => {
+    onDurationReady((duration) => {
+      console.log("Video duration is ready:", duration);
+      resolve(duration); // Resolve the promise with the duration
+    });
+  });
+}
+
 window.addEventListener(
   "load",
-  () => {
+  async () => {
+    // wait for video duration
+    let videoDuration;
+    try {
+      videoDuration = await waitForVideoDuration();
+      console.log(`video duration --> ${videoDuration}`);
+    } catch (error) {
+      console.error("Error waiting for video duration:", error);
+    }
+
     // define elements
     const trimStartDrag = document.getElementById("trim-start-drag");
     const videoScanner = document.getElementById("video-scanner");
@@ -8,6 +29,12 @@ window.addEventListener(
     // get bounding x values from scanner box
     const widthEndOffset = 12;
     const scannerWidth = videoScanner.offsetWidth - widthEndOffset;
+
+    // map scanner box width to videoDuration
+    function scannerWidthDurationMapper(t) {
+      const normalizedVal = (t / scannerWidth) * videoDuration;
+      return normalizedVal;
+    }
 
     // Make the DIV element draggable:
     dragElement(trimStartDrag);
@@ -51,7 +78,16 @@ window.addEventListener(
           newX = 0;
         }
 
+        // update slider visually
         elmnt.style.left = newX + "px";
+
+        // save slider actual (visual on element) value
+        saveSlider("start_slider_actual", newX);
+
+        // convert to video time and save
+        const videoNormalizedNewX = scannerWidthDurationMapper(newX);
+        saveSlider("start_slider_video", newX);
+
         // elmnt.style.top = elmnt.offsetTop - pos2 + "px"; // Update vertical position
       }
 
