@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>My Project</title>
+  </head>
+  <body>
+    <div
+      id="container"
+      class="w-screen h-screen flex flex-col items-center justify-center space-x-5 pl-40 pr-40"
+    >
+      <div class="" id="video-container">
+        <video class="h-full w-full rounded-lg" id="input-video">
+          <source src="./test_1.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div
+          class="relative flex flex-col items-center justify-center w-full h-10 border border-gray-500"
+          id="custom-player-controls"
+        >
+          <div class="absolute h-1 w-full bg-gray-300" id="video-scanner"></div>
+          <div class="absolute left-0" id="trim-start-drag">
+            <div
+              class="tranistion ease-in-out w-3 h-3 rounded-lg bg-red-500 hover hover:scale-125 hover:bg-indigo-500 duration-100"
+              id="trim-start"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
