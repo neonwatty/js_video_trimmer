@@ -28,4 +28,4 @@ function onDurationReady(callback) {
   }
 }
 
-export { onDurationReady, videoDuration };
+export { inputVideo, onDurationReady, videoDuration };

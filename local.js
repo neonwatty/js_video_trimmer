@@ -1,7 +1,6 @@
 // Function to save name-value pair to Local Storage
 function saveSlider(name, value) {
   localStorage.setItem(name, value);
-  console.log("here");
 }
 
 // Function to load name-value pairs from storage

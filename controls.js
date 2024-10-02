@@ -1,10 +1,13 @@
 import { clearSliders, loadSliders, saveSlider } from "./local.js";
-import { onDurationReady } from "./video.js";
+import { inputVideo, onDurationReady } from "./video.js";
+
+// define elements
+const trimStartDrag = document.getElementById("trim-start-drag");
+const videoScanner = document.getElementById("video-scanner");
 
 function waitForVideoDuration() {
   return new Promise((resolve) => {
     onDurationReady((duration) => {
-      console.log("Video duration is ready:", duration);
       resolve(duration); // Resolve the promise with the duration
     });
   });
@@ -17,14 +20,10 @@ window.addEventListener(
     let videoDuration;
     try {
       videoDuration = await waitForVideoDuration();
-      console.log(`video duration --> ${videoDuration}`);
+      console.log("Video duration is ready:", videoDuration);
     } catch (error) {
       console.error("Error waiting for video duration:", error);
     }
-
-    // define elements
-    const trimStartDrag = document.getElementById("trim-start-drag");
-    const videoScanner = document.getElementById("video-scanner");
 
     // get bounding x values from scanner box
     const widthEndOffset = 12;
@@ -86,7 +85,10 @@ window.addEventListener(
 
         // convert to video time and save
         const videoNormalizedNewX = scannerWidthDurationMapper(newX);
-        saveSlider("start_slider_video", newX);
+        saveSlider("start_slider_video", videoNormalizedNewX);
+
+        // set video start time
+        inputVideo.currentTime = videoNormalizedNewX;
 
         // elmnt.style.top = elmnt.offsetTop - pos2 + "px"; // Update vertical position
       }
