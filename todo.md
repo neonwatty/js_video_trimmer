@@ -1,0 +1,3 @@
+- add play, stop buttons
+- add tracker tick for play
+- add end slider
