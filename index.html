@@ -28,6 +28,32 @@
             ></div>
           </div>
         </div>
+        <div
+          class="relative flex flex-row space-x-20 justify-center w-full h-10 border border-gray-500"
+          id="custom-player-buttons"
+        >
+          <div class="play-button">
+            <img
+              src="play-button-empty.svg"
+              class="absolute transition duration-500 w-full h-full hover hover:opacity-0 cursor-pointer"
+              alt=""
+            />
+            <img
+              src="play-button-filled.svg"
+              class="absolute transition duration-500 w-full h-full opacity-0 hover:opacity-100 cursor-pointer"
+            />
+          </div>
+          <div class="pause-button">
+            <img
+              src="pause-button-empty.svg"
+              class="absolute transition duration-500 w-full h-full hover hover:opacity-0 cursor-pointer"
+            />
+            <img
+              src="pause-button-filled.svg"
+              class="absolute transition duration-500 w-full h-full opacity-0 hover:opacity-100 cursor-pointer"
+            />
+          </div>
+        </div>
       </div>
     </div>
     <script src="controls.js" type="module"></script>
