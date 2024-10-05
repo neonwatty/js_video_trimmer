@@ -1,9 +1,40 @@
 import { clearSliders, loadSliders, saveSlider } from "./local.js";
 import { inputVideo, onDurationReady } from "./video.js";
 
-// define elements
+// volume controller
+var volumeControl = document.getElementById("volume-control");
+
+function setVolume() {
+  inputVideo.volume = this.value / 100;
+}
+
+volumeControl.addEventListener("change", setVolume);
+volumeControl.addEventListener("input", setVolume);
+
+// scanner elements
 const trimStartDrag = document.getElementById("trim-start-drag");
 const videoScanner = document.getElementById("video-scanner");
+
+// play-pause button elements
+const playPauseButton = document.getElementById("play-pause-button");
+const playFilledButton = document.getElementById("play-button-filled");
+const playEmptyButton = document.getElementById("play-button-empty");
+const pauseEmptyButton = document.getElementById("pause-button-empty");
+
+let videoPlayIndicator = true;
+
+playPauseButton.addEventListener("click", () => {
+  playFilledButton.classList.toggle("hidden");
+  playEmptyButton.classList.toggle("hidden");
+  pauseEmptyButton.classList.toggle("hidden");
+  if (videoPlayIndicator) {
+    inputVideo.play();
+    videoPlayIndicator = false;
+  } else {
+    inputVideo.pause();
+    videoPlayIndicator = true;
+  }
+});
 
 function waitForVideoDuration() {
   return new Promise((resolve) => {
