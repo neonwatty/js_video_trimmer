@@ -2,14 +2,26 @@ import { clearSliders, loadSliders, saveSlider } from "./local.js";
 import { inputVideo, onDurationReady } from "./video.js";
 
 // volume controller
-var volumeControl = document.getElementById("volume-control");
+let volumeControl = document.getElementById("volume-control");
+let volumeButton = document.getElementById("volume-button");
 
+// show/hide volume controls
+volumeButton.addEventListener("click", () => {
+  volumeControl.classList.toggle("collapse");
+
+  if (!volumeControl.classList.contains("collapse")) {
+    volumeControl.addEventListener("change", setVolume);
+    volumeControl.addEventListener("input", setVolume);
+  } else {
+    volumeControl.removeEventListener("change", setVolume);
+    volumeControl.removeEventListener("input", setVolume);
+  }
+});
+
+// volume setter
 function setVolume() {
   inputVideo.volume = this.value / 100;
 }
-
-volumeControl.addEventListener("change", setVolume);
-volumeControl.addEventListener("input", setVolume);
 
 // scanner elements
 const trimStartDrag = document.getElementById("trim-start-drag");
