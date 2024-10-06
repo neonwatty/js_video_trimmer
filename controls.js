@@ -16,8 +16,12 @@ const playEmptyButton = document.getElementById("play-button-empty");
 const pauseEmptyButton = document.getElementById("pause-button-empty");
 
 function waitForVideoDuration() {
+  const spinner = document.getElementById("load-spinner");
+  spinner.style.display = "block";
   return new Promise((resolve) => {
     onDurationReady((duration) => {
+      spinner.style.display = "none"; // Hide the spinner
+
       resolve(duration); // Resolve the promise with the duration
     });
   });
